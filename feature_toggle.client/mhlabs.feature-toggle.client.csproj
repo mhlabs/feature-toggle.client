@@ -5,4 +5,10 @@
     <RootNamespace>mhlabs.feature_toggle.client</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MhLabs.AwsSignedHttpClient" Version="6.1.0-alpha" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
+  </ItemGroup>
+
 </Project>
