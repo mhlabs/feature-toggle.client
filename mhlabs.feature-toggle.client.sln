@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mhlabs.feature-toggle.client", "feature_toggle.client\mhlabs.feature-toggle.client.csproj", "{F578DB93-95C9-45CD-B5F8-ED1271EB6D15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mhlabs.feature_toggle.client.tests", "feature_toggle.client.tests\mhlabs.feature_toggle.client.tests.csproj", "{E91BF4DF-722C-473F-ACFA-51EC610A77E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mhlabs.feature_toggle.client.test", "feature_toggle.client.test\mhlabs.feature_toggle.client.test.csproj", "{E91BF4DF-722C-473F-ACFA-51EC610A77E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
