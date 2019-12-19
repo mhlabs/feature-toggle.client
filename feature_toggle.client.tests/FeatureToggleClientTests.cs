@@ -79,8 +79,8 @@ namespace mhlabs.feature_toggle.client.tests
             var response = await client.Get(config.FlagName, config.UserKey, config.DefaultValue);
             
             // Assert
-            response.Active.ShouldBeFalse();
-            response.Error.ShouldBe(typeof(TimeoutException).Name);
+            response.Error.ShouldBe(typeof(TaskCanceledException).Name);
+            response.Active.ShouldBe(config.DefaultValue);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace mhlabs.feature_toggle.client.tests
     {
         public async Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = false, CancellationToken cancellationToken = default)
         {
-            await Task.Delay(1000);
+            await Task.Delay(1000, cancellationToken);
             return new FeatureToggleResponse();
         }
     }
