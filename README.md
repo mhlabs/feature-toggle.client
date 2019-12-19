@@ -5,7 +5,7 @@ mhlabs.feature-toggle.client
 
 ### Environment variables
 - ApiPathFormat: _default: "/{0}/{1}/false"_
-- ApiRequestTimeoutMilliseconds: _default: 500_ // instead of using CancellationToken as method parameters for _IFeatureToggleClient.cs_
+- ApiRequestTimeoutMilliseconds: _default: 500_ 
 - CacheDurationInSeconds: _default: 60_
 
 ### IServiceCollection
