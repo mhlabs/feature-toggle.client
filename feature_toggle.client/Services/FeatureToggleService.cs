@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MhLabs.AwsSignedHttpClient;
 using mhlabs.feature_toggle.client.Services.Responses;
+using Newtonsoft.Json;
 
 namespace mhlabs.feature_toggle.client.Services
 {
@@ -33,6 +34,7 @@ namespace mhlabs.feature_toggle.client.Services
 
         internal class FeatureToggleServiceContract
         {
+            [JsonProperty("active")]
             public bool Active { get; set; }
         }
     }

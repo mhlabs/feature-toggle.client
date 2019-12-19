@@ -38,9 +38,11 @@ namespace mhlabs.feature_toggle.client.Test
 
             // Act
             var instance = provider.GetService<IFeatureToggleClient>();
+            var cache = provider.GetService<IMemoryCache>();
 
             // Assert
             instance.ShouldNotBeNull();
+            cache.ShouldNotBeNull();
         }
 
         [Fact]

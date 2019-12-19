@@ -5,7 +5,6 @@ using mhlabs.feature_toggle.client.Services.Responses;
 
 namespace mhlabs.feature_toggle.client.Client
 {
-
     public class NullFeatureToggleClient : IFeatureToggleClient
     {
         public async Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = false)
