@@ -9,7 +9,6 @@ using AutoFixture;
 using System.Threading.Tasks;
 using Shouldly;
 using System.Threading;
-using mhlabs.feature_toggle.client.Services.Responses;
 
 namespace mhlabs.feature_toggle.client.tests
 {
@@ -107,34 +106,6 @@ namespace mhlabs.feature_toggle.client.tests
             response2.Error.ShouldBeNull();
 
             _service.Verify(x => x.Get(config.FlagName, config.UserKey, config.DefaultValue, It.IsAny<CancellationToken>()), Times.Once);
-        }
-    }
-
-    public class TestConfig 
-    {
-        private static readonly Fixture _fixture = new Fixture();
-
-        public IFeatureToggleConfiguration Configuration;
-        public IFeatureToggleResponse Response = new FeatureToggleResponse();
-        public string FlagName = _fixture.Create<string>();
-        public string UserKey = _fixture.Create<string>();
-        public bool DefaultValue = _fixture.Create<bool>();
-
-        public TestConfig(int? apiRequestTimeoutMilliseconds = null)
-        {
-            var config = new Mock<IFeatureToggleConfiguration>();
-            config.Setup(x => x.ApiRequestTimeoutMilliseconds).Returns(apiRequestTimeoutMilliseconds ?? 500);
-            config.Setup(x => x.CacheDurationInSeconds).Returns(60);
-            Configuration = config.Object;
-        }
-    }
-
-    public class DelayedDummyFeatureToggleService : IFeatureToggleService
-    {
-        public async Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = false, CancellationToken cancellationToken = default)
-        {
-            await Task.Delay(1000, cancellationToken);
-            return new FeatureToggleResponse();
         }
     }
 }
