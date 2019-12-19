@@ -9,6 +9,8 @@ using AutoFixture;
 using System.Threading.Tasks;
 using Shouldly;
 using System.Threading;
+using Microsoft.Extensions.DependencyInjection;
+using mhlabs.feature_toggle.client.Configuration;
 
 namespace mhlabs.feature_toggle.client.Test
 {
@@ -23,6 +25,22 @@ namespace mhlabs.feature_toggle.client.Test
             var testConfig = config ?? new TestConfig();
 
             return new FeatureToggleClient(service ?? _service.Object, testConfig.Configuration, cache, NullLogger<FeatureToggleClient>.Instance);
+        }
+
+        [Fact]
+        public void Can_Resolve_Feature_Toggle_Client()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddFeatureToggleClient("http://www.google.com");
+
+            var provider = serviceCollection.BuildServiceProvider();
+
+            // Act
+            var instance = provider.GetService<IFeatureToggleClient>();
+
+            // Assert
+            instance.ShouldNotBeNull();
         }
 
         [Fact]

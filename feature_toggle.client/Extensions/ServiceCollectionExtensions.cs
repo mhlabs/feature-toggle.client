@@ -2,6 +2,7 @@ using System;
 using mhlabs.feature_toggle.client.Client;
 using mhlabs.feature_toggle.client.Services;
 using MhLabs.AwsSignedHttpClient;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace mhlabs.feature_toggle.client.Configuration
@@ -22,6 +23,7 @@ namespace mhlabs.feature_toggle.client.Configuration
         {
             services.AddSingleton<IFeatureToggleClient, FeatureToggleClient>();
             services.AddSingleton<IFeatureToggleConfiguration, FeatureToggleConfiguration>();
+            services.AddSingleton<IMemoryCache, MemoryCache>();
             services.AddSignedHttpClient<IFeatureToggleService, FeatureToggleService>(options);
             return services;
         }
