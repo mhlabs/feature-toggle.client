@@ -1,4 +1,5 @@
 using System;
+using mhlabs.feature_toggle.client.Client;
 using mhlabs.feature_toggle.client.Services;
 using MhLabs.AwsSignedHttpClient;
 using Microsoft.Extensions.DependencyInjection;

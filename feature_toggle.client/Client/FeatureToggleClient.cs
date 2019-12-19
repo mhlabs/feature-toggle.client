@@ -6,7 +6,7 @@ using mhlabs.feature_toggle.client.Services.Responses;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace mhlabs.feature_toggle.client
+namespace mhlabs.feature_toggle.client.Client
 {
     public class FeatureToggleClient : IFeatureToggleClient
     {

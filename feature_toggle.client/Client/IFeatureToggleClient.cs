@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using mhlabs.feature_toggle.client.Services.Responses;
 
-namespace mhlabs.feature_toggle.client
+namespace mhlabs.feature_toggle.client.Client
 {
     public interface IFeatureToggleClient
     {
