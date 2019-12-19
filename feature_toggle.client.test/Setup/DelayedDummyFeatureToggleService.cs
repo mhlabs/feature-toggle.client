@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using mhlabs.feature_toggle.client.Services.Responses;
 
-namespace mhlabs.feature_toggle.client.tests
+namespace mhlabs.feature_toggle.client.Test
 {
 
     public class DelayedDummyFeatureToggleService : IFeatureToggleService

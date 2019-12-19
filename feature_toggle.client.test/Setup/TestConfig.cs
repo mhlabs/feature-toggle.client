@@ -3,7 +3,7 @@ using mhlabs.feature_toggle.client.Services;
 using AutoFixture;
 using mhlabs.feature_toggle.client.Services.Responses;
 
-namespace mhlabs.feature_toggle.client.tests
+namespace mhlabs.feature_toggle.client.Test
 {
 
     public class TestConfig 

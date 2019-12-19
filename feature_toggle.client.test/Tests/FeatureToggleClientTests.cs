@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Shouldly;
 using System.Threading;
 
-namespace mhlabs.feature_toggle.client.tests
+namespace mhlabs.feature_toggle.client.Test
 {
     public class FeatureToggleClientTests
     {
