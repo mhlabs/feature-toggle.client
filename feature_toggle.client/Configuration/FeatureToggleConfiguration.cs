@@ -5,13 +5,6 @@ namespace mhlabs.feature_toggle.client.Services
 {
     public class FeatureToggleConfiguration : IFeatureToggleConfiguration
     {
-        private readonly ILogger<FeatureToggleConfiguration> _logger;
-
-        public FeatureToggleConfiguration(ILogger<FeatureToggleConfiguration> logger)
-        {
-            _logger = logger;
-        }
-        
         private const double DefaultCacheDurationSeconds = 60;
         private const int DefaultApiRequestTimeoutMilliseconds = 500;
         private const string DefaultApiPathFormat = "/{0}/{1}/false";
@@ -33,7 +26,6 @@ namespace mhlabs.feature_toggle.client.Services
             
             if (string.IsNullOrWhiteSpace(baseUrl)) 
             {
-                _logger.LogError("Missing ENV: ApiBaseUrl");
                 throw new ArgumentException("Missing ENV: ApiBaseUrl");
             }
                 

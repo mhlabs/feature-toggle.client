@@ -29,10 +29,15 @@ namespace mhlabs.feature_toggle.client.Client
             _logger.LogInformation("Retrieving flag: {Flag} for user: {User} with default value: {DefaultValue}. Cache key: {CacheKey}", flagName, userKey, defaultValue, cacheKey);
 
             return _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
-            {
+            {   
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(_configuration.CacheDurationInSeconds));
                 return await GetEntry(flagName, userKey, defaultValue);
             });
+        }
+
+        public void Get(string flagName, string userKey, object defaultValue)
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<IFeatureToggleResponse> GetEntry(string flagName, string userKey, bool defaultValue)
