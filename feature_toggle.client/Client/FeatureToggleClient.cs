@@ -35,11 +35,6 @@ namespace mhlabs.feature_toggle.client.Client
             });
         }
 
-        public void Get(string flagName, string userKey, object defaultValue)
-        {
-            throw new NotImplementedException();
-        }
-
         private async Task<IFeatureToggleResponse> GetEntry(string flagName, string userKey, bool defaultValue)
         {
             try
@@ -60,9 +55,9 @@ namespace mhlabs.feature_toggle.client.Client
             {
                 _logger.LogError(ex, "Request UnauthorizedAccessException - Flag: {Flag}. User: {UserKey}");    
             }
-            else if (ex is TimeoutException)
+            else if (ex is TaskCanceledException)
             {
-                _logger.LogError(ex, "Request TimeoutException - Flag: {Flag}. User: {UserKey}");    
+                _logger.LogError(ex, "Request TaskCanceledException - Flag: {Flag}. User: {UserKey}");    
             }
             else
             {
@@ -72,7 +67,7 @@ namespace mhlabs.feature_toggle.client.Client
             return new FeatureToggleResponse() 
             {
                 Active = defaultValue,
-                Successful = false
+                Error = ex.GetType().Name
             };
         }
 

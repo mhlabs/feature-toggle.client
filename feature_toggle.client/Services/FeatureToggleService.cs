@@ -27,7 +27,7 @@ namespace mhlabs.feature_toggle.client.Services
             return new FeatureToggleResponse() 
             {
                 Active = response.Active,
-                Successful = true
+                Error = null
             };
         }
 

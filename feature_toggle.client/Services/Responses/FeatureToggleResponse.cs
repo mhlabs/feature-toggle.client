@@ -8,8 +8,8 @@ namespace mhlabs.feature_toggle.client.Services.Responses
         [JsonProperty("active")]    
         public bool Active { get; set; }
 
-        [JsonProperty("successful")]
-        public bool Successful { get; set; }
+        [JsonProperty("error")]
+        public string Error { get; set; }
         
         [JsonProperty("timestamp")]
         public long TimeStamp => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
