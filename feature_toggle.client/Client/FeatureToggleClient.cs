@@ -66,7 +66,7 @@ namespace mhlabs.feature_toggle.client.Client
 
             return new FeatureToggleResponse() 
             {
-                Active = defaultValue,
+                Enabled = defaultValue,
                 Error = ex.GetType().Name
             };
         }

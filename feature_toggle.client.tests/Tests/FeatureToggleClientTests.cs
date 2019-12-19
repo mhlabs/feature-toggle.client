@@ -30,7 +30,7 @@ namespace mhlabs.feature_toggle.client.tests
         {
             // Arrange
             var config = new TestConfig();
-            config.Response.Active = true;
+            config.Response.Enabled = true;
             config.Response.Error = null;
             
             _service.Setup(x => x.Get(config.FlagName, config.UserKey, config.DefaultValue, It.IsAny<CancellationToken>()))
@@ -41,7 +41,7 @@ namespace mhlabs.feature_toggle.client.tests
             var response = await client.Get(config.FlagName, config.UserKey, config.DefaultValue);
             
             // Assert
-            response.Active.ShouldBeTrue();
+            response.Enabled.ShouldBeTrue();
             response.Error.ShouldBeNull();
         }
 
@@ -50,7 +50,7 @@ namespace mhlabs.feature_toggle.client.tests
         {
             // Arrange
             var config = new TestConfig();
-            config.Response.Active = true;
+            config.Response.Enabled = true;
             config.Response.Error = null;
 
 
@@ -62,7 +62,7 @@ namespace mhlabs.feature_toggle.client.tests
             var response = await client.Get(config.FlagName, config.UserKey, config.DefaultValue);
             
             // Assert
-            response.Active.ShouldBe(config.DefaultValue);
+            response.Enabled.ShouldBe(config.DefaultValue);
             response.Error.ShouldBe(typeof(UnauthorizedAccessException).Name);
         }
 
@@ -79,7 +79,7 @@ namespace mhlabs.feature_toggle.client.tests
             
             // Assert
             response.Error.ShouldBe(typeof(TaskCanceledException).Name);
-            response.Active.ShouldBe(config.DefaultValue);
+            response.Enabled.ShouldBe(config.DefaultValue);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace mhlabs.feature_toggle.client.tests
         {
             // Arrange
             var config = new TestConfig();
-            config.Response.Active = true;
+            config.Response.Enabled = true;
             config.Response.Error = null;
             
             _service.Setup(x => x.Get(config.FlagName, config.UserKey, config.DefaultValue, It.IsAny<CancellationToken>()))
@@ -99,10 +99,10 @@ namespace mhlabs.feature_toggle.client.tests
             var response2 = await client.Get(config.FlagName, config.UserKey, config.DefaultValue);
             
             // Assert
-            response1.Active.ShouldBeTrue();
+            response1.Enabled.ShouldBeTrue();
             response1.Error.ShouldBeNull();
             
-            response2.Active.ShouldBeTrue();
+            response2.Enabled.ShouldBeTrue();
             response2.Error.ShouldBeNull();
 
             _service.Verify(x => x.Get(config.FlagName, config.UserKey, config.DefaultValue, It.IsAny<CancellationToken>()), Times.Once);

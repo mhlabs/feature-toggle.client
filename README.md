@@ -1,11 +1,11 @@
 # feature-toggle.client
 mhlabs.feature-toggle.client
 
-## Usage
+## Setup
 
 ### Environment variables
 - ApiPathFormat: _default: "/{0}/{1}/false"_
-- ApiRequestTimeoutMilliseconds: _default: 500_
+- ApiRequestTimeoutMilliseconds: _default: 500_ // instead of using CancellationToken as method parameters for _IFeatureToggleClient.cs_
 - CacheDurationInSeconds: _default: 60_
 
 ### IServiceCollection
@@ -49,5 +49,45 @@ var options = new HttpOptions ()
 }
 
 serviceCollection.AddFeatureToggleClient(options);
+```
+
+## Usage
+```
+
+### Retrieve flag for user 
+
+public class MyService
+{   
+    private readonly IFeatureToggleClient _client;
+    private readonly IMyOldService _oldService;
+    private readonly IMyNewService _newService;
+
+    public MyService (IFeatureToggleClient client, IMyOldService oldService, IMyNewService newService)
+    {
+        _client = client;
+        _oldService = oldService;
+        _newService = newService;
+    }
+
+    public async Task<ServiceResponse> GetForMember(string userKey)
+    {
+        var flag = await _client.Get("my-service", userKey, false);
+
+        return flag.Enabled ?
+            await _newService.Get() :
+            await _oldService.Get();
+    }
+}
+```
+
+### Contract
+
+```
+public interface IFeatureToggleResponse
+{
+    bool Active { get; set; }
+    string Error { get; set; }
+    long TimeStamp { get; }
+}
 ```
 

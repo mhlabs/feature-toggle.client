@@ -5,8 +5,8 @@ namespace mhlabs.feature_toggle.client.Services.Responses
 {
     public class FeatureToggleResponse : IFeatureToggleResponse
     {
-        [JsonProperty("active")]    
-        public bool Active { get; set; }
+        [JsonProperty("enabled")]    
+        public bool Enabled { get; set; }
 
         [JsonProperty("error")]
         public string Error { get; set; }
