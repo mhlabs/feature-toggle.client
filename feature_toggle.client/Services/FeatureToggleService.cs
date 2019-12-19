@@ -12,21 +12,20 @@ namespace mhlabs.feature_toggle.client.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<FeatureToggleService> _logger;
-        private readonly string pathFormat = "/{0}/{1}/false";
+        private readonly IFeatureToggleConfiguration _configuration;
 
-        public FeatureToggleService(HttpClient httpClient, ILogger<FeatureToggleService> logger)
+        public FeatureToggleService(HttpClient httpClient, IFeatureToggleConfiguration configuration, ILogger<FeatureToggleService> logger)
         {
-            this._httpClient = httpClient;
-            this._logger = logger;
-
-            pathFormat = Environment.GetEnvironmentVariable("FT_PATH_FORMAT") ?? pathFormat;
+            _httpClient = httpClient;
+            _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = default(bool), CancellationToken cancellationToken = default) 
         {
             try 
             {
-                var url = string.Format(pathFormat, flagName, userKey);
+                var url = string.Format(_configuration.ApiPathFormat, flagName, userKey);
                 var response = await _httpClient.SendAsync<FeatureToggleServiceContract>(HttpMethod.Get, url, cancellationToken: cancellationToken);
                 
                 return new FeatureToggleResponse() 

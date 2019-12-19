@@ -1,0 +1,43 @@
+using System;
+using Microsoft.Extensions.Logging;
+
+namespace mhlabs.feature_toggle.client.Services
+{
+    public class FeatureToggleConfiguration : IFeatureToggleConfiguration
+    {
+        private readonly ILogger<FeatureToggleConfiguration> _logger;
+
+        public FeatureToggleConfiguration(ILogger<FeatureToggleConfiguration> logger)
+        {
+            _logger = logger;
+        }
+        
+        private const double DefaultCacheDurationSeconds = 60;
+        private const int DefaultApiRequestTimeoutMilliseconds = 500;
+        private const string DefaultApiPathFormat = "/{0}/{1}/false";
+
+        public double CacheDurationInSeconds => long.TryParse(Environment.GetEnvironmentVariable("CacheDurationInSeconds"), out var duration) ?
+                    duration :
+                    DefaultCacheDurationSeconds;
+
+        public int ApiRequestTimeoutMilliseconds => int.TryParse(Environment.GetEnvironmentVariable("DefaultApiRequestTimeoutMilliseconds"), out var duration) ?
+                    duration :
+                    DefaultApiRequestTimeoutMilliseconds;
+        
+        public string ApiPathFormat => Environment.GetEnvironmentVariable("ApiPathFormat") ?? DefaultApiPathFormat;
+        public string ApiBaseUrl => GetApiBaseUrl();
+        
+        private string GetApiBaseUrl()
+        {
+            var baseUrl = Environment.GetEnvironmentVariable("ApiBaseUrl");
+            
+            if (string.IsNullOrWhiteSpace(baseUrl)) 
+            {
+                _logger.LogError("Missing ENV: ApiBaseUrl");
+                throw new ArgumentException("Missing ENV: ApiBaseUrl");
+            }
+                
+            return baseUrl;
+        }
+    }
+}

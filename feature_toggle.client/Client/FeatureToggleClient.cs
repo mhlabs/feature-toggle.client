@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using mhlabs.feature_toggle.client.Services;
@@ -24,15 +23,22 @@ namespace mhlabs.feature_toggle.client
             _configuration = configuration;
         }
 
-        public Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = default(bool), CancellationToken cancellationToken = default)
+        public Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = default(bool))
         {
             var cacheKey = ToCacheKey(flagName, userKey, defaultValue);
             _logger.LogInformation("Retrieving flag: {Flag} for user: {User} with default value: {DefaultValue}. Cache key: {CacheKey}", flagName, userKey, defaultValue, cacheKey);
 
-            return _cache.GetOrCreateAsync(cacheKey, async cacheEntry => {
+            return _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+            {
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(_configuration.CacheDurationInSeconds));
-                return await _service.Get(flagName, userKey, defaultValue, cancellationToken);
+                return await GetEntry(flagName, userKey, defaultValue);
             });
+        }
+
+        private async Task<IFeatureToggleResponse> GetEntry(string flagName, string userKey, bool defaultValue)
+        {
+            var cts = new CancellationTokenSource(_configuration.ApiRequestTimeoutMilliseconds);
+            return await _service.Get(flagName, userKey, defaultValue, cts.Token);
         }
 
         private static string ToCacheKey(string flagName, string userKey, bool defaultValue)
