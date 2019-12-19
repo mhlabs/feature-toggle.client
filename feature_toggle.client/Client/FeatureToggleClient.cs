@@ -37,8 +37,38 @@ namespace mhlabs.feature_toggle.client
 
         private async Task<IFeatureToggleResponse> GetEntry(string flagName, string userKey, bool defaultValue)
         {
-            var cts = new CancellationTokenSource(_configuration.ApiRequestTimeoutMilliseconds);
-            return await _service.Get(flagName, userKey, defaultValue, cts.Token);
+            try
+            {
+                var cts = new CancellationTokenSource(_configuration.ApiRequestTimeoutMilliseconds);
+                return await _service.Get(flagName, userKey, defaultValue, cts.Token);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex, flagName, userKey, defaultValue);
+            }
+            
+        }
+
+        private IFeatureToggleResponse HandleException(Exception ex, string flagName, string userKey, bool defaultValue)
+        {
+            if (ex is UnauthorizedAccessException)
+            {
+                _logger.LogError(ex, "Request UnauthorizedAccessException - Flag: {Flag}. User: {UserKey}");    
+            }
+            else if (ex is TimeoutException)
+            {
+                _logger.LogError(ex, "Request TimeoutException - Flag: {Flag}. User: {UserKey}");    
+            }
+            else
+            {
+                _logger.LogError(ex, "Request Exception - Flag: {Flag}. User: {UserKey}");
+            }
+
+            return new FeatureToggleResponse() 
+            {
+                Active = defaultValue,
+                Successful = false
+            };
         }
 
         private static string ToCacheKey(string flagName, string userKey, bool defaultValue)
