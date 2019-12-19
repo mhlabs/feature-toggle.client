@@ -18,18 +18,5 @@ namespace mhlabs.feature_toggle.client.Services
                     DefaultApiRequestTimeoutMilliseconds;
         
         public string ApiPathFormat => Environment.GetEnvironmentVariable("ApiPathFormat") ?? DefaultApiPathFormat;
-        public string ApiBaseUrl => GetApiBaseUrl();
-        
-        private string GetApiBaseUrl()
-        {
-            var baseUrl = Environment.GetEnvironmentVariable("ApiBaseUrl");
-            
-            if (string.IsNullOrWhiteSpace(baseUrl)) 
-            {
-                throw new ArgumentException("Missing ENV: ApiBaseUrl");
-            }
-                
-            return baseUrl;
-        }
     }
 }

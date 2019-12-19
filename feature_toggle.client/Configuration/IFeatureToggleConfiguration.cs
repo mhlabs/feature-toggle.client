@@ -6,7 +6,6 @@ namespace mhlabs.feature_toggle.client.Services
     {
         double CacheDurationInSeconds { get; }
         string ApiPathFormat { get; }
-        string ApiBaseUrl { get; }
         int ApiRequestTimeoutMilliseconds { get; }
     }
 }
