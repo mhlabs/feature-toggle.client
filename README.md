@@ -52,10 +52,9 @@ serviceCollection.AddFeatureToggleClient(options);
 ```
 
 ## Usage
-```
 
 ### Retrieve flag for user 
-
+```
 public class MyService
 {   
     private readonly IFeatureToggleClient _client;
@@ -81,7 +80,6 @@ public class MyService
 ```
 
 ### Contract
-
 ```
 public interface IFeatureToggleResponse
 {
