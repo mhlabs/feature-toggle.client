@@ -4,8 +4,8 @@ mhlabs.feature-toggle.client
 ## Setup
 
 ### Environment variables
-- ApiPathFormat: _default: "/{0}/{1}/false"_
-- ApiRequestTimeoutMilliseconds: _default: 500_ 
+- ApiPathFormat: _default: "/int-feature-flags/int/flags/{0}/{1}/false"_
+- ApiRequestTimeoutMilliseconds: _default: 125_ 
 - CacheDurationInSeconds: _default: 60_
 
 ### IServiceCollection
