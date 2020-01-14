@@ -1,5 +1,5 @@
 # feature-toggle.client
-mhlabs.feature-toggle.client
+https://www.nuget.org/packages/mhlabs.feature-toggle.client/
 
 ## Setup
 
