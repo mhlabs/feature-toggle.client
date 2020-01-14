@@ -23,13 +23,13 @@ namespace mhlabs.feature_toggle.client.Client
             _configuration = configuration;
         }
 
-        public Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = default(bool))
+        public Task<IFeatureToggleResponse> Get(string flagName, string userKey, bool defaultValue = default)
         {
             var cacheKey = ToCacheKey(flagName, userKey, defaultValue);
             _logger.LogInformation("Retrieving flag: {Flag} for user: {User} with default value: {DefaultValue}. Cache key: {CacheKey}", flagName, userKey, defaultValue, cacheKey);
 
             return _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
-            {   
+            {
                 cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(_configuration.CacheDurationInSeconds));
                 return await GetEntry(flagName, userKey, defaultValue);
             });
@@ -46,22 +46,21 @@ namespace mhlabs.feature_toggle.client.Client
             {
                 return HandleException(ex, flagName, userKey, defaultValue);
             }
-            
         }
 
         private IFeatureToggleResponse HandleException(Exception ex, string flagName, string userKey, bool defaultValue)
         {
             if (ex is UnauthorizedAccessException)
             {
-                _logger.LogError(ex, "Request UnauthorizedAccessException - Flag: {Flag}. User: {UserKey}");    
+                _logger.LogError(ex, "Request UnauthorizedAccessException - Flag: {Flag}. User: {UserKey}", flagName, userKey);
             }
             else if (ex is TaskCanceledException)
             {
-                _logger.LogError(ex, "Request TaskCanceledException - Flag: {Flag}. User: {UserKey}");    
+                _logger.LogError(ex, "Request TaskCanceledException - Flag: {Flag}. User: {UserKey}", flagName, userKey);
             }
             else
             {
-                _logger.LogError(ex, "Request Exception - Flag: {Flag}. User: {UserKey}");
+                _logger.LogError(ex, "Request Exception - Flag: {Flag}. User: {UserKey}", flagName, userKey);
             }
 
             return new FeatureToggleResponse() 

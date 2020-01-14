@@ -9,10 +9,12 @@ namespace mhlabs.feature_toggle.client.Configuration
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
         /// Registers client with RetryLevel.Read and UseCircuitBreaker = true
+        /// </summary>
         public static IServiceCollection AddFeatureToggleClient(this IServiceCollection services, string baseUrl)
         {
-            return services.AddFeatureToggleClient(new HttpOptions 
+            return services.AddFeatureToggleClient(new HttpOptions
             {
                 BaseUrl = baseUrl,
                 RetryLevel = RetryLevel.Read,

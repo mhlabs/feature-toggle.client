@@ -1,10 +1,8 @@
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using MhLabs.AwsSignedHttpClient;
 using mhlabs.feature_toggle.client.Services.Responses;
+using MhLabs.AwsSignedHttpClient;
 using Newtonsoft.Json;
 
 namespace mhlabs.feature_toggle.client.Services
@@ -24,15 +22,15 @@ namespace mhlabs.feature_toggle.client.Services
         {
             var url = string.Format(_configuration.ApiPathFormat, flagName, userKey);
             var response = await _httpClient.SendAsync<FeatureToggleServiceContract>(HttpMethod.Get, url, cancellationToken: cancellationToken);
-            
-            return new FeatureToggleResponse() 
+
+            return new FeatureToggleResponse()
             {
                 Enabled = response.Active,
                 Error = null
             };
         }
 
-        internal class FeatureToggleServiceContract
+        public class FeatureToggleServiceContract
         {
             [JsonProperty("active")]
             public bool Active { get; set; }
