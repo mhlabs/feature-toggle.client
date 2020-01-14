@@ -70,7 +70,7 @@ public class MyService
 
     public async Task<ServiceResponse> GetForMember(string userKey)
     {
-        var flag = await _client.Get("my-service", userKey, false);
+        var flag = await _client.Get("ai-service.v2", userKey, false);
 
         return flag.Enabled ?
             await _newService.Get() :
